@@ -174,8 +174,8 @@ export async function POST(request: Request) {
 
     const response = await genai.models.generateContent({
       model: process.env.GEMINI_MODEL ?? "gemini-2.5-flash",
-      contents: userMessages.map((message) => ({
-        role: "user",
+      contents: parsed.data.messages.map((message) => ({
+        role: message.role === "assistant" ? "model" : "user",
         parts: [{ text: message.content }]
       })),
       config: {
